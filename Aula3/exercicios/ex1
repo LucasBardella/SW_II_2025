@@ -1,7 +1,9 @@
 <?php
+$nome = "João";
 
 function boasVindas($nome) {
-    echo "Bem-vindo, $nome!\n";
+    echo "Bem-vindo, $nome!";
 }
 
+boasVindas($nome);
 ?>
