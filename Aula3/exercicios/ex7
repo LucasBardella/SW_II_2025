@@ -1,0 +1,13 @@
+<?php
+$fatNumero = 5;
+
+function fatorial($numero) {
+    $fatorial = 1;
+    for ($i = 2; $i <= $numero; $i++) {
+        $fatorial *= $i;
+    }
+    return $fatorial;
+}
+
+echo fatorial($fatNumero);
+?>
