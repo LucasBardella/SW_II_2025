@@ -1,0 +1,9 @@
+<?php
+$numeros = [1, 2, 3, 4, 5];
+
+function somaArray($numeros) {
+    return array_sum($numeros);
+}
+
+echo somaArray($numeros);
+?>
