@@ -1,0 +1,12 @@
+<?php
+function gerarNumerosAleatorios() {
+    $array = [];
+    for ($i = 0; $i < 10; $i++) {
+        $array[] = rand(1, 100);
+    }
+    return $array;
+}
+
+$numerosAleatorios = gerarNumerosAleatorios();
+print_r($numerosAleatorios);
+?>
