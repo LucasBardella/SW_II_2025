@@ -1,7 +1,9 @@
 <?php
+$numero = 7;
 
 function parOuImpar($numero) {
     return $numero % 2 == 0 ? "Par" : "Ímpar";
 }
 
+echo parOuImpar($numero);
 ?>
