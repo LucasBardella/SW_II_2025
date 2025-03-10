@@ -1,0 +1,7 @@
+<?php
+
+function diferenca($a, $b) {
+    return abs($a - $b);
+}
+
+?>
