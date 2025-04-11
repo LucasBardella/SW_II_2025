@@ -1,16 +1,13 @@
 <?php
 $pessoa = [
-    "nome" => "Carlos",
-    "idade" => 30,
-    "cidade" => "São Paulo"
+    "nome" => "Lucas",
+    "idade" => 17,
+    "cidade" => "Ribeirão Pires"
 ];
 
-$pessoa["profissao"] = "Desenvolvedor";
-
-$amigos = ["João", "Maria", "Pedro"];
-
+$pessoa["função"] = "Estudante";
+$amigos = ["Aline", "Caetano", "Giulia"];
 $dados = array_merge($pessoa, ["amigos" => $amigos]);
 
 print_r($dados);
-
 ?>
