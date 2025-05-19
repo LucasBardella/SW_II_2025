@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Consulta CEP</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 30px;
+      background-color: #f4f4f4;
+    }
+    input, button {
+      padding: 10px;
+      margin: 5px 0;
+      font-size: 16px;
+    }
+    .resultado {
+      margin-top: 20px;
+      padding: 15px;
+      background: white;
+      border-radius: 5px;
+      box-shadow: 0 0 10px #ccc;
+    }
+  </style>
+</head>
+<body>
+  <h2>🔎 Consulta de CEP</h2>
+  <input type="text" id="cep" placeholder="Digite o CEP (8 dígitos)">
+  <button onclick="buscarCEP()">Buscar</button>
+
+  <div class="resultado" id="resultado"></div>
+
+  <script>
+    function buscarCEP() {
+      const cep = document.getElementById('cep').value.replace(/\D/g, '');
+
+      if (cep.length !== 8) {
+        alert('Digite um CEP válido com 8 dígitos!');
+        return;
+      }
+
+      fetch(`https://viacep.com.br/ws/${cep}/json/`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.erro) {
+            document.getElementById('resultado').innerHTML = '<p>CEP não encontrado.</p>';
+            return;
+          }
+
+          const estados = {
+            "AC": "Acre", "AL": "Alagoas", "AP": "Amapá", "AM": "Amazonas", "BA": "Bahia",
+            "CE": "Ceará", "DF": "Distrito Federal", "ES": "Espírito Santo", "GO": "Goiás",
+            "MA": "Maranhão", "MT": "Mato Grosso", "MS": "Mato Grosso do Sul", "MG": "Minas Gerais",
+            "PA": "Pará", "PB": "Paraíba", "PR": "Paraná", "PE": "Pernambuco", "PI": "Piauí",
+            "RJ": "Rio de Janeiro", "RN": "Rio Grande do Norte", "RS": "Rio Grande do Sul",
+            "RO": "Rondônia", "RR": "Roraima", "SC": "Santa Catarina", "SP": "São Paulo",
+            "SE": "Sergipe", "TO": "Tocantins"
+          };
+
+          const regioes = {
+            "Norte": ["AC", "AP", "AM", "PA", "RO", "RR", "TO"],
+            "Nordeste": ["AL", "BA", "CE", "MA", "PB", "PE", "PI", "RN", "SE"],
+            "Centro-Oeste": ["DF", "GO", "MT", "MS"],
+            "Sudeste": ["ES", "MG", "RJ", "SP"],
+            "Sul": ["PR", "RS", "SC"]
+          };
+
+          let regiao = "Desconhecida";
+          for (let r in regioes) {
+            if (regioes[r].includes(data.uf)) {
+              regiao = r;
+              break;
+            }
+          }
+
+          const estadoCompleto = estados[data.uf] || data.uf;
+
+          document.getElementById('resultado').innerHTML = `
+            <p><strong>Logradouro:</strong> ${data.logradouro || 'Não informado'}</p>
+            <p><strong>Bairro:</strong> ${data.bairro || 'Não informado'}</p>
+            <p><strong>Localidade:</strong> ${data.localidade}</p>
+            <p><strong>UF:</strong> ${data.uf}</p>
+            <p><strong>Estado:</strong> ${estadoCompleto}</p>
+            <p><strong>Região:</strong> ${regiao}</p>
+          `;
+        })
+        .catch(error => {
+          console.error('Erro na requisição:', error);
+          document.getElementById('resultado').innerHTML = '<p>Erro ao buscar o CEP.</p>';
+        });
+    }
+  </script>
+</body>
+</html>
